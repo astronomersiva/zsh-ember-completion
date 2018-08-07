@@ -1,0 +1,39 @@
+#compdef ember
+
+typeset -A opt_args
+
+_arguments -C \
+  '1:cmd:->cmds' \
+  '2:g:->blueprint_commands' \
+  '3:generate:->blueprint_commands' \
+  '*:: :->args' \
+&& ret=0
+
+case "$state" in
+  (cmds)
+     local commands; commands=(
+      'g:ember generate'
+      'generate:ember generate'
+     )
+
+      _describe -t commands 'command' commands && ret=0
+  ;;
+  (blueprint_commands)
+    local blueprints; blueprints=(
+      'addon:The default blueprint for ember-cli addons'
+      'addon-import:Generates an import wrapper'
+      'app:The default blueprint for ember-cli projects'
+      'blueprint:Generates a blueprint and definition'
+      'http-mock:Generates a mock api endpoint in /api prefix'
+      'http-proxy:Generates a relative proxy to another server'
+      'in-repo-addon:The blueprint for addon in repo ember-cli addons'
+      'lib:Generates a lib directory for in-repo addons'
+      'module-unification-app:Generates an Ember application with a module unification layout'
+      'server:Generates a server directory for mocks and proxies'
+      'vendor-shim:Generates an ES6 module shim for global libraries'
+    )
+    _describe -t blueprints 'blueprint' blueprints && ret=0
+  ;;
+esac
+
+return 1
